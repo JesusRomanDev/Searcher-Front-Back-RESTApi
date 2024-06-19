@@ -1,0 +1,23 @@
+{
+    "fruits": [
+     {
+      "id": 1,
+      "name": "banana"
+     },
+     {
+      "id": 2,
+      "name": "apple"
+     },
+     {
+      "id": 3,
+      "name": "strawberry"
+     },{
+     "id": 4,
+     "name": "orange"
+     },
+     {
+      "id": 5,
+      "name": "tangerine"
+      }
+    ]
+ }
