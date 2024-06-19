@@ -1,15 +1,32 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios';
 import Error from './components/Error';
+import Resultado from './components/Resultado';
 
 function App() {
 
+  type DataResponse = {
+    id: number;
+    name: string;
+  }
+
   const [busqueda, setBusqueda] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const [data, setData] = useState<DataResponse[]>([]);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     axios(`http://localhost:3000/search?q=${busqueda}`)
-      .then(response => console.log(response.data))
+      .then(response => {
+        //Como luce lo de abajo {data: Array(1)}
+        //Entonces hay que destructurarlo para poder acceder al metodo de .map con data
+        console.log(response.data)
+        const {data} = response.data 
+        console.log(data);
+        //Despues de destructurarlo queda asi, entonces ya podemos usar los metodos de array
+        // [{…}]
+        setData(data);
+        setError('');
+      })
       .catch(response => setError(response.response.data))
   }
 
@@ -34,6 +51,12 @@ function App() {
         <input onChange={e => setBusqueda(e.target.value)} type="search" className='rounded border-2 border-gray-400' placeholder='Ingresa tu busqueda...'/>
         <button type='submit'>Buscar</button>
       </form>
+
+      <div>
+        {data && (
+          <Resultado data={data} />
+        )}
+      </div>
     </>
   )
 }
